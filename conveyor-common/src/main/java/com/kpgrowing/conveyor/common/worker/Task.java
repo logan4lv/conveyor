@@ -1,4 +1,4 @@
-package com.kpgrowing.conveyor.executor.task;
+package com.kpgrowing.conveyor.common.worker;
 
 public interface Task {
     public enum CompleteType{

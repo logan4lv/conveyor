@@ -1,6 +1,8 @@
 package com.kpgrowing.conveyor.executor.task;
 
 import com.kpgrowing.conveyor.common.queue.Job;
+import com.kpgrowing.conveyor.common.worker.Task;
+import com.kpgrowing.conveyor.common.worker.TaskCompleteListener;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 

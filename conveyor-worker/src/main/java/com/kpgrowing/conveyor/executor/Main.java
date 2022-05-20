@@ -1,5 +1,6 @@
 package com.kpgrowing.conveyor.executor;
 
+import com.kpgrowing.conveyor.common.worker.Worker;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

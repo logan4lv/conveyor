@@ -1,4 +1,4 @@
-package com.kpgrowing.conveyor.executor.task;
+package com.kpgrowing.conveyor.common.worker;
 
 import com.kpgrowing.conveyor.common.queue.Job;
 

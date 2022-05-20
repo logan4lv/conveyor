@@ -1,13 +1,13 @@
-package com.kpgrowing.conveyor.executor;
+package com.kpgrowing.conveyor.common.worker;
 
 import com.kpgrowing.conveyor.common.queue.BlockingGroupQueue;
 import com.kpgrowing.conveyor.common.queue.Job;
 import com.kpgrowing.conveyor.common.queue.Status;
 import com.kpgrowing.conveyor.common.queue.zookeeper.ZKBlockingGroupQueue;
 import com.kpgrowing.conveyor.common.support.ConveyorThread;
-import com.kpgrowing.conveyor.executor.task.Task;
-import com.kpgrowing.conveyor.executor.task.TaskCompleteListener;
-import com.kpgrowing.conveyor.executor.task.TaskFactory;
+import com.kpgrowing.conveyor.common.worker.Task;
+import com.kpgrowing.conveyor.common.worker.TaskCompleteListener;
+import com.kpgrowing.conveyor.executor.task.SimpleJobConvert;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.ExecutorService;
@@ -32,16 +32,15 @@ public class Worker extends ConveyorThread implements TaskCompleteListener {
 
     @Override
     public void run() {
-        log.info("job-executor running");
+        log.info("worker running");
         while(true) {
             while (semaphore.tryAcquire()) {
                 try {
-                    log.info("job-executor taking job..., semaphore avaliable permits[{}]",
-                            semaphore.availablePermits());
+                    log.info("worker taking job..., semaphore available permits[{}]", semaphore.availablePermits());
                     Job job = queue.take();
-                    log.info("job-executor taked job[{}]", job.getGroupKey() + " - " + job.getKey());
+                    log.info("worker take job[{}]", job.getGroupKey() + " - " + job.getKey());
                     pool.execute(() -> {
-                        Task task = TaskFactory.produce(job);
+                        Task task = SimpleJobConvert.toTask(job);
                         task.start(this);
                     });
                 } catch (Exception e) {
